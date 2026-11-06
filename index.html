@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>审美风格速览 · 给鱼片挑</title>
+<style>
+  :root{
+    --bg:#0f1217; --card:#1a1f28; --line:#2a3140; --txt:#e9edf4; --mut:#8b97a8;
+    --sel:#38e8c8; --sel-soft:rgba(56,232,200,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:system-ui,"Segoe UI","Microsoft YaHei",sans-serif;
+    padding:40px 28px 120px;
+  }
+  header{max-width:1180px;margin:0 auto 26px}
+  h1{margin:0 0 8px;font-size:26px;letter-spacing:.3px}
+  .sub{margin:0;color:var(--mut);font-size:14px;line-height:1.7}
+  .sub b{color:var(--sel);font-weight:600}
+  .tip{margin-top:10px;font-size:12.5px;color:#6d7a8c}
+  .counter{position:fixed;top:16px;right:20px;background:#141922;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;z-index:9}
+  .counter b{color:var(--sel);font-size:15px}
+
+  .grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--card);border:2px solid transparent;border-radius:16px;overflow:hidden;
+    cursor:pointer;transition:border-color .15s, transform .12s, box-shadow .15s;
+    position:relative;
+  }
+  .card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .card.selected{border-color:var(--sel);background:var(--sel-soft)}
+  .card.selected::after{
+    content:"✓";position:absolute;top:10px;right:10px;width:26px;height:26px;
+    background:var(--sel);color:#05231d;border-radius:50%;font-weight:800;
+    display:grid;place-items:center;font-size:14px;z-index:5;
+  }
+
+  .preview{height:190px;position:relative;overflow:hidden}
+  .meta{padding:12px 16px 16px}
+  .meta h2{margin:0 0 4px;font-size:15px;letter-spacing:.2px}
+  .meta h2 em{font-style:normal;color:var(--mut);font-size:12px;font-weight:400;margin-left:6px}
+  .meta p{margin:0 0 6px;font-size:12.5px;color:var(--mut);line-height:1.55}
+  .refs{font-size:11px;color:#5f6b7d}
+
+  /* ============ 1 极简 ============ */
+  .p-minimal{background:#fff;color:#111;padding:22px 24px;display:flex;flex-direction:column;gap:12px;height:100%}
+  .p-minimal h3{margin:0;font-weight:500;font-size:17px;letter-spacing:.2px}
+  .p-minimal p{margin:0;color:#9a9a9a;font-size:10.5px;letter-spacing:.3px}
+  .p-minimal .btn{align-self:flex-start;border:1px solid #dcdcdc;padding:6px 14px;font-size:10.5px;color:#555;border-radius:5px;background:#fff}
+  .p-minimal .row{display:flex;gap:14px;margin-top:auto;font-size:9.5px;color:#b5b5b5}
+  .p-minimal .row span{flex:1;border-top:1px solid #eee;padding-top:6px}
+
+  /* ============ 2 Bento ============ */
+  .p-bento{background:#0f1115;display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1fr 1fr;gap:7px;padding:11px;height:100%}
+  .p-bento>div{border-radius:11px;padding:10px;color:#fff;font-size:10px;line-height:1.4;overflow:hidden}
+  .p-bento .b1{background:#1c2330;grid-row:1}
+  .p-bento .b1 b{display:block;font-size:17px;letter-spacing:-.3px}
+  .p-bento .b1 s{text-decoration:none;color:#7ee787;font-size:10px}
+  .p-bento .b2{background:linear-gradient(135deg,#3d5afe,#8a2be2);grid-row:1}
+  .p-bento .b3{background:#f2f2f0;color:#111}
+  .p-bento .b4{background:linear-gradient(135deg,#ff8a00,#e52e71)}
+
+  /* ============ 3 玻璃 ============ */
+  .p-glass{background:linear-gradient(135deg,#6d5efc,#e8508a 52%,#ffb86c);display:grid;place-items:center;height:100%}
+  .p-glass .pane{backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);border-radius:16px;padding:16px 20px;color:#fff;box-shadow:0 10px 34px rgba(0,0,0,.18);text-align:center}
+  .p-glass .pane b{font-size:13px;letter-spacing:.4px}
+  .p-glass .pane p{margin:4px 0 10px;font-size:9.5px;opacity:.85}
+  .p-glass .pane span{display:inline-block;background:rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 12px;font-size:9.5px}
+
+  /* ============ 4 粗野 ============ */
+  .p-brut{background:#f2f2f2;display:flex;flex-direction:column;gap:9px;padding:16px;height:100%}
+  .p-brut .tag{align-self:flex-start;background:#ffd400;border:3px solid #000;padding:1px 10px;font-weight:900;font-size:10.5px;letter-spacing:.5px;color:#000}
+  .p-brut h3{margin:0;font:900 27px/1 "Arial Black",Arial,sans-serif;letter-spacing:-1.2px;color:#000}
+  .p-brut .line{height:3px;background:#000;width:64%}
+  .p-brut .btn{align-self:flex-start;background:#000;color:#fff;padding:6px 16px;font-weight:800;font-size:11px;letter-spacing:.5px;margin-top:auto}
+
+  /* ============ 5 瑞士 ============ */
+  .p-swiss{background:#f7f7f5;padding:16px 18px;height:100%;position:relative;overflow:hidden}
+  .p-swiss .red{position:absolute;top:0;left:0;width:40%;height:9px;background:#e30613}
+  .p-swiss h3{margin:20px 0 6px;font:800 25px/.95 "Helvetica Neue",Arial,sans-serif;letter-spacing:-1.4px;color:#111}
+  .p-swiss .rule{display:flex;gap:2px;margin:10px 0 8px}
+  .p-swiss .rule i{flex:1;height:5px;background:#111}
+  .p-swiss .rule i:nth-child(2){background:#e30613}
+  .p-swiss p{margin:0;font-size:9.5px;color:#444;line-height:1.5;max-width:78%}
+
+  /* ============ 6 霓虹 ============ */
+  .p-neon{background:#08080f;display:grid;place-items:center;height:100%;position:relative}
+  .p-neon::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(34,211,238,.14),transparent 55%),radial-gradient(circle at 75% 80%,rgba(240,171,252,.13),transparent 55%)}
+  .p-neon .glow{position:relative;border:2px solid #22d3ee;border-radius:12px;padding:16px 22px;color:#f0abfc;text-shadow:0 0 9px #f0abfc;box-shadow:0 0 14px #22d3ee,inset 0 0 14px rgba(34,211,238,.22);font-family:Consolas,monospace;letter-spacing:3px;font-size:13px;text-align:center}
+  .p-neon .glow small{display:block;letter-spacing:1px;font-size:8.5px;color:#7dd3fc;text-shadow:0 0 6px #7dd3fc;margin-top:6px}
+
+  /* ============ 7 像素 ============ */
+  .p-pixel{background:#161629;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:100%;font-family:Consolas,"Courier New",monospace}
+  .p-pixel .frame{border:3px solid #e8e8f0;box-shadow:3px 3px 0 #4a4a7a;padding:10px 16px;color:#e8e8f0;font-size:12px;font-weight:700;letter-spacing:2px}
+  .p-pixel .btn{background:#e8c170;color:#1a1a2e;font-weight:700;font-size:10.5px;padding:6px 14px;letter-spacing:2px;box-shadow:3px 3px 0 #000,0 0 0 2px #e8c170}
+  .p-pixel .hp{width:110px;height:9px;background:#3a3a5a;border:2px solid #e8e8f0;padding:1px}
+  .p-pixel .hp i{display:block;width:64%;height:100%;background:#e85d75}
+
+  /* ============ 8 Y2K ============ */
+  .p-y2k{background:linear-gradient(135deg,#dfe0f7,#aab4ff 38%,#ffd1ec 68%,#c8f6ff);display:grid;place-items:center;height:100%;position:relative;overflow:hidden}
+  .p-y2k::before{content:"✦";position:absolute;top:14px;left:18px;color:#fff;font-size:14px;text-shadow:0 0 10px #ff8ad8}
+  .p-y2k::after{content:"✦";position:absolute;bottom:16px;right:20px;color:#fff;font-size:21px;text-shadow:0 0 12px #8a7bff}
+  .p-y2k .bubble{background:linear-gradient(#fff,#cfd8ff);border-radius:999px;padding:11px 24px;box-shadow:0 0 0 3px #fff,0 7px 0 rgba(120,90,255,.32),inset 0 -5px 9px rgba(120,90,255,.22);font-weight:800;color:#3d3d8f;font-size:13px;text-shadow:0 1px 0 #fff;letter-spacing:.5px}
+  .p-y2k .bubble small{display:block;text-align:center;font-weight:400;font-size:8.5px;color:#8a8ac9;letter-spacing:2px;margin-top:2px}
+
+  /* ============ 9 编辑 ============ */
+  .p-edit{background:#faf7f0;color:#141414;padding:16px 18px;height:100%;font-family:Georgia,"Times New Roman","Songti SC",serif}
+  .p-edit .kicker{font-size:8px;letter-spacing:2.5px;color:#b03a2e;font-weight:700}
+  .p-edit h3{margin:4px 0 8px;font-size:21px;line-height:1.05;letter-spacing:-.7px}
+  .p-edit .col{column-count:2;column-gap:13px;column-rule:1px solid #ddd;font-size:8.6px;line-height:1.55;color:#555}
+  .p-edit .col::first-letter{font-size:22px;float:left;line-height:.85;padding-right:2px;color:#b03a2e}
+
+  /* ============ 10 手绘 ============ */
+  .p-hand{background:#f6efdd;display:grid;place-items:center;height:100%;font-family:"Comic Sans MS","Segoe Print",cursive}
+  .p-hand .note{background:#fffdf5;border:3px dashed #2b2b2b;border-radius:14px 22px 10px 20px;padding:14px 22px;transform:rotate(-2deg);font-size:17px;color:#2b2b2b;box-shadow:4px 4px 0 rgba(0,0,0,.14)}
+  .p-hand .note small{display:block;font-size:10px;color:#8a7f66;transform:rotate(1.5deg)}
+
+  /* ============ 11 蒸汽波 ============ */
+  .p-vapor{background:linear-gradient(#ff9de2,#c86dd7 42%,#20114a);height:100%;position:relative;overflow:hidden}
+  .p-vapor .sun{width:74px;height:74px;border-radius:50%;background:linear-gradient(#ffd36e,#ff6f91);position:absolute;left:50%;top:14%;transform:translateX(-50%);box-shadow:0 0 34px #ff6f91}
+  .p-vapor .floor{position:absolute;bottom:-4%;left:-25%;right:-25%;height:56%;background-image:linear-gradient(rgba(255,111,145,.85) 1px,transparent 1px),linear-gradient(90deg,rgba(255,111,145,.85) 1px,transparent 1px);background-size:34px 26px;transform:perspective(220px) rotateX(58deg);transform-origin:bottom;opacity:.62}
+  .p-vapor .word{position:absolute;left:50%;bottom:26%;transform:translateX(-50%);color:#fff;font-family:Georgia,serif;letter-spacing:6px;font-size:15px;text-shadow:0 0 12px #ff6f91,0 0 24px #8a2be2}
+
+  /* ============ 12 拟物 ============ */
+  .p-skeuo{background:linear-gradient(#5c3d24,#38210f);display:grid;place-items:center;height:100%;position:relative;overflow:hidden}
+  .p-skeuo::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 6px)}
+  .p-skeuo .btn{position:relative;background:linear-gradient(#f7f2e8,#d9d0bd);border:1px solid #b8a888;border-radius:9px;padding:11px 22px;color:#5a4a2a;font-weight:700;font-size:12px;letter-spacing:.3px;box-shadow:inset 0 2px 0 rgba(255,255,255,.95),inset 0 -4px 7px rgba(90,60,20,.32),0 5px 12px rgba(0,0,0,.42);text-shadow:0 1px 0 #fff}
+  .p-skeuo .btn small{display:block;text-align:center;font-size:8px;font-weight:400;color:#9a8a66;letter-spacing:1.5px;margin-top:1px}
+
+  /* ============ footer ============ */
+  .bar{max-width:1180px;margin:30px auto 0;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .copy{background:var(--sel);color:#05231d;border:0;border-radius:10px;padding:12px 22px;font-weight:800;font-size:14px;cursor:pointer}
+  .copy:hover{filter:brightness(1.08)}
+  .picked{font-size:13px;color:var(--mut)}
+  .picked b{color:var(--txt)}
+  .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);background:#0b1220;border:1px solid var(--sel);color:var(--txt);padding:11px 22px;border-radius:12px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:20;max-width:80vw}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer.note{max-width:1180px;margin:16px auto 0;font-size:12px;color:#5f6b7d;line-height:1.7}
+  footer.note b{color:#8b97a8}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>审美风格速览 <span style="font-size:14px;color:#5f6b7d;font-weight:400">· 给鱼片挑</span></h1>
+  <p class="sub">12 种主流视觉风格，每张都是那套风格的真实 CSS 小样。点选你喜欢的（可多选），底部<b>复制我的选择</b>发给我，我来提炼成你的「审美宪章」。</p>
+  <p class="tip">别看名字，看感觉。也欢迎告诉我「你讨厌哪几张」——排除信息往往比喜好更有用。</p>
+</header>
+
+<div class="counter">已选 <b>0</b> / 12</div>
+
+<main class="grid">
+
+  <article class="card" data-id="1" data-name="极简 Minimalism">
+    <div class="preview p-minimal">
+      <h3>Workspace</h3>
+      <p>Simple tools for focused work.</p>
+      <span class="btn">Get started</span>
+      <div class="row"><span>Docs</span><span>Pricing</span><span>Blog</span></div>
+    </div>
+    <div class="meta"><h2>01 极简 <em>Minimalism</em></h2><p>白底、细字、大留白，靠间距和层级说话</p><span class="refs">Linear · Notion · Apple 官网</span></div>
+  </article>
+
+  <article class="card" data-id="2" data-name="Bento Grid">
+    <div class="preview p-bento">
+      <div class="b1"><b>24.8k</b><s>↑ 12.4%</s></div>
+      <div class="b2">Gradient<br>Feature</div>
+      <div class="b3">Light card<br>with data</div>
+      <div class="b4">Promo</div>
+    </div>
+    <div class="meta"><h2>02 Bento 方格拼图 <em>Bento Grid</em></h2><p>方块拼图、信息密度高，每格一个小故事</p><span class="refs">Apple 发布会 · Linear 官网</span></div>
+  </article>
+
+  <article class="card" data-id="3" data-name="玻璃拟态 Glassmorphism">
+    <div class="preview p-glass">
+      <div class="pane">
+        <b>Acrylic Card</b>
+        <p>frosted glass · light blur</p>
+        <span>Explore</span>
+      </div>
+    </div>
+    <div class="meta"><h2>03 玻璃拟态 <em>Glassmorphism</em></h2><p>磨砂半透明、光晕、浮在彩色之上的毛玻璃</p><span class="refs">visionOS · Windows 11 · macOS 26</span></div>
+  </article>
+
+  <article class="card" data-id="4" data-name="粗野主义 Brutalism">
+    <div class="preview p-brut">
+      <span class="tag">NO RULES</span>
+      <h3>BOLD<br>MOVE</h3>
+      <div class="line"></div>
+      <span class="btn">JOIN THE CLUB →</span>
+    </div>
+    <div class="meta"><h2>04 粗野主义 <em>Brutalism</em></h2><p>大黑框、高饱和、反设计，故意粗糙但极有态度</p><span class="refs">Gumroad · Balenciaga · Craigslist</span></div>
+  </article>
+
+  <article class="card" data-id="5" data-name="瑞士国际主义 Swiss">
+    <div class="preview p-swiss">
+      <div class="red"></div>
+      <h3>Grid<br>&amp; Type</h3>
+      <div class="rule"><i></i><i></i><i></i><i></i></div>
+      <p>秩序、网格、无衬线，用克制表达力量。</p>
+    </div>
+    <div class="meta"><h2>05 瑞士国际主义 <em>Swiss Style</em></h2><p>网格、贴左、无衬线、黑白红，理性又锋利</p><span class="refs">Muji · Helvetica 海报 · 大众汽车</span></div>
+  </article>
+
+  <article class="card" data-id="6" data-name="暗黑霓虹 Cyberpunk">
+    <div class="preview p-neon">
+      <div class="glow">NIGHT CITY<small>// SYSTEM ONLINE</small></div>
+    </div>
+    <div class="meta"><h2>06 暗黑霓虹 <em>Cyberpunk / Neon</em></h2><p>深底、荧光描边、故障感，赛博夜总会的味道</p><span class="refs">Cyberpunk 2077 · Vercel 暗色 · Twitch</span></div>
+  </article>
+
+  <article class="card" data-id="7" data-name="像素复古 Pixel Retro">
+    <div class="preview p-pixel">
+      <div class="frame">GAME START</div>
+      <div class="btn">PRESS A</div>
+      <div class="hp"><i></i></div>
+    </div>
+    <div class="meta"><h2>07 像素复古 <em>Pixel Retro</em></h2><p>8-bit、硬边、有限色板，游戏机的童年感</p><span class="refs">独立游戏 · 你的 AionUi 像素开场</span></div>
+  </article>
+
+  <article class="card" data-id="8" data-name="Y2K 千禧风">
+    <div class="preview p-y2k">
+      <div class="bubble">✦ Y2K VIBES ✦<small>WELCOME 2 THE FUTURE</small></div>
+    </div>
+    <div class="meta"><h2>08 Y2K 千禧风 <em>Y2K</em></h2><p>金属渐变、高饱和、气泡糖感，千禧年的未来想象</p><span class="refs">2000 年代网页 · 藤原浩 · 早期 MTV</span></div>
+  </article>
+
+  <article class="card" data-id="9" data-name="编辑杂志 Editorial">
+    <div class="preview p-edit">
+      <div class="kicker">ISSUE 07 · STORIES</div>
+      <h3>The Quiet<br>Revolution</h3>
+      <div class="col">A story about restraint, rhythm and the art of leaving things out. Less, but better. The new issue explores quiet software, slow tools and the craft of subtraction — why the best interfaces disappear.</div>
+    </div>
+    <div class="meta"><h2>09 编辑杂志风 <em>Editorial</em></h2><p>衬线大标题、图文混排、栏线，纸媒的仪式感</p><span class="refs">NYT · Medium · Monocle</span></div>
+  </article>
+
+  <article class="card" data-id="10" data-name="手绘涂鸦 Hand-drawn">
+    <div class="preview p-hand">
+      <div class="note">idea!<small>sketch it out ✎</small></div>
+    </div>
+    <div class="meta"><h2>10 手绘涂鸦 <em>Hand-drawn</em></h2><p>抖动线条、纸感、歪歪扭扭，亲切有温度</p><span class="refs">Notion 插画 · Slack 插画 · Basecamp</span></div>
+  </article>
+
+  <article class="card" data-id="11" data-name="蒸汽波 Vaporwave">
+    <div class="preview p-vapor">
+      <div class="sun"></div>
+      <div class="floor"></div>
+      <div class="word">V A P O R</div>
+    </div>
+    <div class="meta"><h2>11 蒸汽波 <em>Vaporwave</em></h2><p>粉紫渐变、网格地平线、复古雕像，梦核的怀旧</p><span class="refs">Tumblr 时代 · 复古未来主义</span></div>
+  </article>
+
+  <article class="card" data-id="12" data-name="拟物 Skeuomorphism">
+    <div class="preview p-skeuo">
+      <div class="btn">PRESS ME<small>REAL &amp; TACTILE</small></div>
+    </div>
+    <div class="meta"><h2>12 拟物 <em>Skeuomorphism</em></h2><p>皮革、木纹、凸起按钮，真实材质的触感</p><span class="refs">早期 iOS · 拟物时代</span></div>
+  </article>
+
+</main>
+
+<div class="bar">
+  <button class="copy">复制我的选择</button>
+  <span class="picked">你的选择：<b>还没选</b></span>
+</div>
+
+<footer class="note">
+  <p><b>怎么用：</b>点卡片选中/取消 → 点「复制我的选择」→ 粘贴到对话里发给我。也可以直接告诉我编号和好恶理由。</p>
+  <p>这 12 个只是起点，风格之间有大量的混合地带（比如「极简 × 编辑」= 高端杂志感）。你挑完之后我们再看混合方向。</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var KEY='dsh-aesthetic-selection';
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var counter=document.querySelector('.counter b');
+  var picked=document.querySelector('.picked b');
+  var toastEl=document.getElementById('toast');
+  var toastTimer=null;
+
+  var sel=new Set();
+  try{ sel=new Set(JSON.parse(localStorage.getItem(KEY)||'[]')); }catch(e){}
+
+  function toast(msg){
+    toastEl.textContent=msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ toastEl.classList.remove('show'); },2600);
+  }
+
+  function render(){
+    cards.forEach(function(c){
+      c.classList.toggle('selected', sel.has(c.dataset.id));
+    });
+    counter.textContent=sel.size;
+    var names=[];
+    cards.forEach(function(c){ if(sel.has(c.dataset.id)) names.push(c.dataset.id+'·'+c.dataset.name); });
+    picked.textContent=names.length?names.join('、'):'还没选';
+  }
+
+  cards.forEach(function(c){
+    c.addEventListener('click',function(){
+      var id=c.dataset.id;
+      if(sel.has(id)) sel.delete(id); else sel.add(id);
+      try{ localStorage.setItem(KEY, JSON.stringify(Array.from(sel))); }catch(e){}
+      render();
+    });
+  });
+
+  document.querySelector('.copy').addEventListener('click',function(){
+    var txt=Array.from(sel).join('、')||'（还没选）';
+    function fallback(){
+      var ta=document.createElement('textarea');
+      ta.value=txt; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); toast('已复制：'+txt); }catch(e){ toast('复制失败，手动发我：'+txt); }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ toast('已复制：'+txt); },fallback);
+    } else fallback();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
