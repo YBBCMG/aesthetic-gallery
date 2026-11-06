@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>三个方向 · 4.5 终端 / 2.1 苹果 / 9.2 大片</title>
+<style>
+:root{
+  --serif:'Didot','Bodoni MT','Playfair Display',Georgia,'Times New Roman','Songti SC',SimSun,'STSong',serif;
+  --mono:'JetBrains Mono','Cascadia Mono',Consolas,'Courier New',monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  --green:#8ff0a4;
+  --ink:#e8ece7;
+  --dim:#6f7d72;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0b0d0c;color:#e8ece7;font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+/* ---------- 顶部导航：三方向速览 ---------- */
+.top{position:relative;z-index:9;background:#0b0d0c;border-bottom:1px solid #1d221f;padding:22px 40px 20px;
+     display:flex;align-items:baseline;gap:28px;flex-wrap:wrap}
+.top h1{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8f9b93;font-weight:500}
+.top h1 b{color:#e8ece7;font-weight:600}
+.top nav{margin-left:auto;display:flex;gap:8px}
+.top nav a{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#cfd6d0;text-decoration:none;
+           border:1px solid #2a312d;padding:6px 12px;transition:.18s}
+.top nav a:hover{background:#e8ece7;color:#0b0d0c;border-color:#e8ece7}
+.top p{flex:1 0 100%;font-size:12.5px;line-height:1.75;color:#8f9b93;max-width:1040px}
+.top p b{color:#d7ded8;font-weight:600}
+.top p em{font-style:normal;color:#d8a86a}
+
+/* ---------- 段落标签条（每个方向自带判据） ---------- */
+.lbl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+     background:#101412;border-top:1px solid #1d221f;border-bottom:1px solid #1d221f;
+     padding:9px 40px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:#8f9b93;position:relative;z-index:8}
+.lbl b{color:#0b0d0c;background:#e8ece7;padding:3px 8px;font-weight:700;letter-spacing:.08em}
+.lbl span{color:#e8ece7}
+.lbl i{font-style:normal;color:#7b8780}
+.lbl a{margin-left:auto;color:#7b8780;text-decoration:none;font-size:13px}
+.lbl a:hover{color:#e8ece7}
+.blink{animation:bl 1.05s steps(2,start) infinite}
+@keyframes bl{to{visibility:hidden}}
+
+/* ---------- 照片占位（胶片颗粒 + 双色渐变，纯 CSS/SVG，不联网） ---------- */
+.ph{position:relative;overflow:hidden;background:#101312;isolation:isolate}
+.ph::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 24% 14%,rgba(255,255,255,.46),rgba(255,255,255,.07) 42%,transparent 70%),
+             linear-gradient(155deg,#3d4340 0%,#171b19 56%,#0a0c0b 100%)}
+.ph::after{content:'';position:absolute;inset:0;opacity:.42;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>")}
+.ph i{position:absolute;left:-25%;top:16%;width:150%;height:24%;transform:rotate(-13deg);filter:blur(7px);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent)}
+.ph--b::before{background:radial-gradient(90% 110% at 78% 22%,rgba(255,255,255,.5),rgba(255,255,255,.05) 48%,transparent 72%),
+                             linear-gradient(200deg,#4a514c 0%,#141817 60%,#080a09 100%)}
+.ph--c::before{background:radial-gradient(140% 80% at 50% 100%,rgba(255,255,255,.34),transparent 62%),
+                             linear-gradient(20deg,#333a37 0%,#121614 58%,#070908 100%)}
+.ph--d::before{background:radial-gradient(110% 100% at 12% 88%,rgba(255,255,255,.4),transparent 62%),
+                             linear-gradient(-30deg,#3a403c 0%,#151a17 62%,#090b0a 100%)}
+.ph--e::before{background:radial-gradient(80% 120% at 88% 14%,rgba(255,255,255,.44),transparent 58%),
+                             linear-gradient(170deg,#2f3532 0%,#191d1b 55%,#0a0c0b 100%)}
+/* 主体：一颗受光的球体 + 地平线，缩略图才像「照片」而不是色块 */
+/* 拱门：半圆顶 + 落地，宽度收窄才不像胶囊；落影把地平面交代出来 */
+.ph u{position:absolute;left:54%;bottom:7%;width:25%;height:66%;transform:none;
+  border-radius:50% 50% 6px 6px/46% 46% 0 0;
+  background:linear-gradient(172deg,#8d948d 0%,#3d4340 44%,#161a18 100%);
+  box-shadow:0 34px 54px -22px rgba(0,0,0,.9),26px 4px 60px rgba(0,0,0,.45),inset -16px 0 40px rgba(0,0,0,.42)}
+.ph--b u{left:31%;width:21%;height:58%}
+.ph--c u{left:66%;width:29%;height:72%;bottom:4%}
+.ph--d u{left:44%;width:17%;height:50%;bottom:9%}
+.ph--e u{left:59%;width:23%;height:64%}
+.ph--a u{left:52%;width:24%;height:68%}
+/* 接地阴影：没有它，拱门浮在半空像胶囊 */
+.ph u::after{content:'';position:absolute;left:50%;bottom:-1%;width:250%;height:11%;transform:translateX(-50%);
+  background:radial-gradient(closest-side,rgba(0,0,0,.8),rgba(0,0,0,0));filter:blur(5px)}
+.dC .shot .ph u{height:54%;bottom:17%}
+.dA-list .th u{width:22%;height:74%;bottom:8%;box-shadow:14px 0 30px rgba(0,0,0,.75)}
+.dA-hero .ph u{display:none}
+
+/* ============================================================
+   方向 A · 4.5 终端 × 9.2 大片
+   骨架用提示符与等宽字，尺度用 Didot 巨字 + 全幅黑白图
+   ============================================================ */
+.dA{background:#06080a;color:#e8ece7;padding-bottom:0}
+.dA .lbl{background:#0a0e0c}
+.dA-nav{display:flex;align-items:baseline;gap:26px;padding:18px 40px;border-bottom:1px solid #161c19;
+        font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--dim)}
+.dA-nav .prompt{color:var(--green)}
+.dA-nav nav{display:flex;gap:22px}
+.dA-nav nav a{color:#b9c3bb;text-decoration:none}
+.dA-nav nav a:hover{color:var(--green);text-decoration:underline;text-underline-offset:4px}
+.dA-nav .status{margin-left:auto;display:flex;align-items:center;gap:7px;color:#8b968e}
+.dA-nav .status em{width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);
+                   display:inline-block;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+.dA-hero{position:relative;height:52vh;min-height:340px;border-bottom:1px solid #161c19}
+.dA-hero .ph{position:absolute;inset:0;filter:contrast(1.06) brightness(.92)}
+.dA-hero .ph::before{background:radial-gradient(120% 80% at 68% 10%,rgba(255,255,255,.42),rgba(255,255,255,.05) 44%,transparent 68%),
+                                linear-gradient(160deg,#464c48 0%,#151a18 52%,#050706 100%)}
+.dA-hero h1{position:absolute;left:40px;bottom:22px;font-family:var(--serif);font-weight:400;
+            font-size:clamp(64px,11.5vw,168px);line-height:.86;letter-spacing:-.02em;color:#fff;
+            text-shadow:0 2px 40px rgba(0,0,0,.5)}
+.dA-hero h1 span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+                 text-transform:uppercase;color:#cfd6d0;margin-top:18px;text-shadow:none}
+.dA-hero .cap{position:absolute;right:40px;bottom:26px;font-family:var(--mono);font-size:11px;
+              letter-spacing:.1em;color:#b6c0b9;text-align:right;line-height:1.7}
+
+.dA-list{list-style:none;border-top:0}
+.dA-list li{display:grid;grid-template-columns:56px minmax(0,1fr) 190px 210px;align-items:center;gap:28px;
+            padding:22px 40px;border-bottom:1px solid #161c19;transition:.22s;cursor:pointer}
+.dA-list li:hover{background:#0c1310}
+.dA-list .no{font-family:var(--mono);font-size:12px;color:#4f5a53;letter-spacing:.1em}
+.dA-list .nm{font-family:var(--serif);font-size:clamp(26px,3.4vw,46px);line-height:1;letter-spacing:-.01em;
+             color:#e8ece7;transition:.22s}
+.dA-list .nm small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+                   text-transform:uppercase;color:#6f7d72;margin-top:9px}
+.dA-list li:hover .nm{color:var(--green)}
+.dA-list li:hover .nm small{color:#9fb0a4}
+.dA-list .meta{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#8b968e;line-height:1.9}
+.dA-list .th{height:92px;filter:grayscale(1) contrast(1.1) brightness(.85);transition:.24s}
+.dA-list li:hover .th{filter:grayscale(.15) contrast(1.05) brightness(1)}
+
+.dA-foot{padding:26px 40px 34px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#4f5a53;
+         display:flex;align-items:center;gap:8px}
+.dA-foot .cur{color:var(--green);font-size:13px}
+
+/* ============================================================
+   方向 B · 2.1 苹果 × 4.5 终端
+   壳是苹果（浅色/留白/圆角/柔影），内容是终端（等宽/日志/进度条）
+   ============================================================ */
+.dB{background:#f5f5f7;color:#1d1d1f;padding-bottom:56px}
+.dB .lbl{background:#ececed;border-color:#dcdcde}
+.dB .lbl b{background:#1d1d1f;color:#fff}
+.dB .lbl span{color:#1d1d1f}
+.dB .lbl i{color:#6e6e73}
+.dB .lbl a{color:#6e6e73}
+.dB .lbl a:hover{color:#1d1d1f}
+.dB-wrap{max-width:1180px;margin:0 auto;padding:44px 40px 0}
+.dB-head{display:flex;align-items:flex-end;gap:20px;margin-bottom:26px;flex-wrap:wrap}
+.dB-head h2{font-size:clamp(30px,4vw,46px);font-weight:600;letter-spacing:-.028em;line-height:1}
+.dB-head p{font-family:var(--mono);font-size:12px;color:#6e6e73;letter-spacing:.02em;margin-left:auto}
+.dB .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.dB .card{background:#fff;border-radius:20px;padding:24px;display:flex;flex-direction:column;
+          box-shadow:0 1px 2px rgba(0,0,0,.05),0 14px 34px -18px rgba(0,0,0,.18)}
+.dB .card h3{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+             color:#8f8f94;margin-bottom:14px}
+.dB .c-w h3{text-transform:none;letter-spacing:.05em;font-size:11.5px;color:#6e6e73}
+.dB .m{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:#3a3a3c;white-space:pre-wrap}
+.dB .m.dim{color:#8f8f94}
+.dB .m b{color:#1d1d1f;font-weight:600}
+.dB .ok{color:#1a8c3f}
+.dB .cur{color:#1a8c3f}
+.c-hero{grid-column:span 7}
+.c-hero .big{font-size:clamp(24px,3vw,34px);font-weight:600;letter-spacing:-.02em;line-height:1.25;margin-bottom:14px}
+.c-status{grid-column:span 5}
+.c-w{grid-column:span 4}
+.c-load{grid-column:span 4}
+.c-note{grid-column:span 8}
+.dB .bar{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:#1d1d1f;margin-top:auto}
+.dB .loadgrid{display:grid;grid-template-columns:84px max-content 22px;justify-items:start;row-gap:9px;align-items:center;
+              font-family:var(--mono);font-size:12px;color:#3a3a3c;letter-spacing:.02em}
+.dB .loadgrid .bar{margin:0;color:#1d1d1f;letter-spacing:.1em}
+.dB .loadgrid>span:nth-child(3n){padding-left:9px}
+.dB .bar em{font-style:normal;color:#d2d2d7}
+.dB .rowlink{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+             font-family:var(--mono);font-size:12px;padding:7px 0;border-top:1px solid #ececee;color:#3a3a3c}
+.dB .rowlink:first-of-type{border-top:0}
+.dB .rowlink span:last-child{color:#8f8f94}
+.dB .pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;
+          background:#f0f0f2;border-radius:999px;padding:5px 11px;color:#3a3a3c}
+.dB .pill i{width:6px;height:6px;border-radius:50%;background:#1a8c3f;display:inline-block}
+.dB .tag{display:inline-block;font-family:var(--mono);font-size:11px;color:#6e6e73;
+         border:1px solid #e2e2e5;border-radius:6px;padding:3px 8px;margin:4px 6px 0 0}
+
+/* ============================================================
+   方向 C · 2.1 苹果 × 9.2 大片
+   网格与留白来自苹果，图像与 Didot 尺度来自大片
+   ============================================================ */
+.dC{background:#fbfbfa;color:#141414;padding-bottom:56px}
+.dC .lbl{background:#f1f0ed;border-color:#e2e1dd}
+.dC .lbl b{background:#141414;color:#fbfbfa}
+.dC .lbl span{color:#141414}
+.dC .lbl i{color:#736f68}
+.dC .lbl a{color:#736f68}
+.dC-wrap{max-width:1240px;margin:0 auto;padding:46px 40px 0}
+.dC .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.dC .cell{position:relative;background:#f1f0ed;border-radius:12px;overflow:hidden;min-height:180px;
+          display:flex;flex-direction:column;justify-content:flex-end}
+.dC .cell .meta{position:relative;z-index:2;padding:18px 20px;display:flex;align-items:flex-end;gap:14px}
+.dC .cell .no{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:#8b867c}
+.dC .cell .nm{font-family:var(--serif);font-size:26px;line-height:1.05;letter-spacing:-.01em}
+.dC .cell .sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8b867c;margin-left:auto}
+.dC .c-hero2{grid-column:span 8;min-height:440px;background:#141414}
+.c-hero2 .ph{position:absolute;inset:0}
+.dC .c-hero2 .meta{display:block;padding:30px 34px}
+.dC .c-hero2 .no{display:block;margin-bottom:18px}
+.dC .c-hero2 .sub{display:block;margin:16px 0 0}
+.c-hero2 .nm{font-family:var(--serif);font-size:clamp(40px,5.6vw,74px);color:#fff;line-height:.94;letter-spacing:-.015em}
+.c-hero2 .sub{color:#cfcac0}
+.c-hero2 .no{color:#cfcac0}
+.dC .c-index{grid-column:span 4;background:#fff;justify-content:flex-start;padding:24px}
+.c-index h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b867c;margin-bottom:8px}
+.dC .idx{list-style:none;font-family:var(--mono);font-size:11.5px}
+.dC .idx li{display:flex;gap:12px;padding:11px 0;border-top:1px solid #e8e6e1;color:#3d3b37;transition:.2s;cursor:pointer}
+.dC .idx li:first-child{border-top:0}
+.dC .idx li b{font-weight:600;color:#141414;font-family:var(--serif);font-size:15px;letter-spacing:0}
+.dC .idx li span{margin-left:auto;color:#9a958b}
+.dC .idx li:hover{color:#141414;background:#faf9f6}
+.dC .shot{grid-column:span 4;min-height:300px;background:#141414}
+.dC .shot .ph{position:absolute;inset:0}
+.dC .shot .meta{padding:20px}
+.dC .shot .nm{color:#fff}
+.dC .shot .no,.dC .shot .sub{color:#cfcac0}
+.dC .c-state{grid-column:span 5;background:#141414;justify-content:flex-start;padding:34px}
+.c-state p{font-family:var(--serif);font-size:clamp(20px,2.4vw,29px);line-height:1.32;color:#f3f1ec;letter-spacing:-.01em;margin-top:auto}
+.c-state .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b867c}
+.dC .c-contact{grid-column:span 7;background:#f1f0ed;justify-content:space-between;padding:30px 34px}
+.c-contact .ln{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+               padding:13px 0;border-top:1px solid #ddd9d1;font-family:var(--mono);font-size:12px;color:#3d3b37}
+.c-contact .ln:first-of-type{border-top:0}
+.c-contact .ln b{font-family:var(--serif);font-size:19px;font-weight:400;color:#141414;letter-spacing:0}
+.c-contact .ln span{color:#9a958b}
+.dC-foot{max-width:1240px;margin:0 auto;padding:34px 40px 0;display:flex;justify-content:space-between;
+         font-family:var(--mono);font-size:11px;color:#9a958b;letter-spacing:.04em}
+
+@media (max-width:900px){
+  .top,.lbl{padding-left:20px;padding-right:20px}
+  .dA-nav{padding:14px 20px;gap:14px;flex-wrap:wrap}
+  .dA-hero h1{left:20px;bottom:18px}
+  .dA-hero .cap{right:20px;bottom:18px;font-size:10px}
+  .dA-list li{grid-template-columns:34px 1fr;gap:12px;padding:18px 20px}
+  .dA-list .meta,.dA-list .th{display:none}
+  .dB-wrap,.dC-wrap{padding:30px 20px 0}
+  .dB .card,.dC .cell{grid-column:span 12!important}
+}
+</style>
+</head>
+<body id="top">
+
+<div class="top">
+  <h1>方向对比 · <b>NORTH STUDIO</b> 作品集首页 · 同一份内容三种骨架</h1>
+  <nav>
+    <a href="#dA">A · 4.5 终端 × 9.2 大片</a>
+    <a href="#dB">B · 2.1 苹果 × 4.5 终端</a>
+    <a href="#dC">C · 2.1 苹果 × 9.2 大片</a>
+  </nav>
+  <p>
+    你选的三支落在三根轴上，按宪章「混搭最多两根轴」，这里做了 <b>两两配对</b>的三种拍法。
+    <em>硬冲突先说清</em>：4.5 是「全等宽 / 零装饰 / 黑底绿字」，2.1 是「大圆角 / 柔影 / 浅色留白」，
+    两者在同一屏里必须分主次 —— 所以 A、B 各自让一支当骨架、另一支当皮肤，不是五五开。
+    内容统一用一份虚构作品集（6 件作品 · 品牌/装置/出版/摄影/产品/实验），这样读到的差异才是风格差异。
+  </p>
+</div>
+
+<!-- ============================== A ============================== -->
+<section class="dA" id="dA">
+  <div class="lbl">
+    <b>方向 A</b><span>4.5 终端 × 9.2 大片</span>
+    <i>骨架 = 提示符 / 等宽 / 黑底；尺度 = Didot 巨字 + 全幅黑白图；零圆角零阴影</i>
+    <a href="#top">↑</a>
+  </div>
+
+  <header class="dA-nav">
+    <span class="prompt">~/north $</span>
+    <nav><a href="#dA">works</a><a href="#dA">about</a><a href="#dA">contact</a></nav>
+    <span class="status"><em></em>online · 06 files</span>
+  </header>
+
+  <div class="dA-hero">
+    <div class="ph"><i></i><u></u></div>
+    <h1>WORKS<span>作品 / 2022 — 2025</span></h1>
+    <p class="cap">FIG.01 — 全幅黑白主视觉<br>curated by north studio</p>
+  </div>
+
+  <ol class="dA-list">
+    <li>
+      <span class="no">01</span>
+      <span class="nm">海岸线档案<small>Coastline Archive</small></span>
+      <span class="meta">品牌识别<br>2025 · 12 周</span>
+      <span class="th ph ph--b"><i></i><u></u></span>
+    </li>
+    <li>
+      <span class="no">02</span>
+      <span class="nm">深水信号<small>Deep Signal</small></span>
+      <span class="meta">交互装置<br>2024 · 8 周</span>
+      <span class="th ph ph--c"><i></i><u></u></span>
+    </li>
+    <li>
+      <span class="no">03</span>
+      <span class="nm">纸上年轮<small>Paper Rings</small></span>
+      <span class="meta">出版物<br>2024 · 16 周</span>
+      <span class="th ph ph--d"><i></i><u></u></span>
+    </li>
+    <li>
+      <span class="no">04</span>
+      <span class="nm">城市切片<small>Urban Slice</small></span>
+      <span class="meta">摄影集<br>2023 · 24 周</span>
+      <span class="th ph ph--e"><i></i><u></u></span>
+    </li>
+    <li>
+      <span class="no">05</span>
+      <span class="nm">冷光协议<small>Cold Light Protocol</small></span>
+      <span class="meta">数字产品<br>2023 · 20 周</span>
+      <span class="th ph ph--a"><i></i><u></u></span>
+    </li>
+    <li>
+      <span class="no">06</span>
+      <span class="nm">空白练习<small>Blank Practice</small></span>
+      <span class="meta">实验<br>2022 · 持续</span>
+      <span class="th ph ph--c"><i></i><u></u></span>
+    </li>
+  </ol>
+
+  <footer class="dA-foot">// © 2025 north studio · built with 4.5 + 9.2 · <span class="cur blink">▌</span></footer>
+</section>
+
+<!-- ============================== B ============================== -->
+<section class="dB" id="dB">
+  <div class="lbl">
+    <b>方向 B</b><span>2.1 苹果 × 4.5 终端</span>
+    <i>壳 = Bento 网格 / 20px 圆角 / 浅灰底 / 柔影；内容 = 等宽提示符 / 日志 / 方块进度条</i>
+    <a href="#top">↑</a>
+  </div>
+
+  <div class="dB-wrap">
+    <div class="dB-head">
+      <h2>north studio</h2>
+      <p>6 works · 2022—2025 · v1.4.0</p>
+    </div>
+
+    <div class="bento">
+      <article class="card c-hero">
+        <h3>whoami</h3>
+        <p class="big">结构先行，排版驱动，强对比。</p>
+        <p class="m">$ north --role designer,frontend --since 2016
+<span class="ok">→ 在做</span>  结构先行的工作方式：先用网格定生死，再谈风格</p>
+        <p class="m dim" style="margin-top:auto">$ <span class="cur blink">▌</span></p>
+      </article>
+
+      <article class="card c-status">
+        <h3>status</h3>
+        <p style="margin-bottom:16px"><span class="pill"><i></i>available for work</span></p>
+        <div class="m dim">$ git log --oneline -3
+<span style="color:#3a3a3c">a3f9c1 <b style="color:#1d1d1f">ship</b> 冷光协议 / 上线</span>
+<span style="color:#3a3a3c">7d2e04 <b style="color:#1d1d1f">wip</b>  城市切片 / 选片 42/120</span>
+<span style="color:#3a3a3c">91cbe8 <b style="color:#1d1d1f">init</b> 海岸线档案</span></div>
+        <p class="m dim" style="margin-top:auto;padding-top:10px;border-top:1px solid #ececee">uptime 214 天 · 0 事故</p>
+      </article>
+
+      <article class="card c-w">
+        <h3>~/works/coastline</h3>
+        <div class="m">$ ls
+<span class="ok">brand.md</span>  <span class="ok">type.pdf</span>
+<span class="ok">signage/</span>  <span class="ok">notes/</span></div>
+        <p class="bar">████████████<em>░░</em> 88%</p>
+      </article>
+
+      <article class="card c-w">
+        <h3>~/works/deep-signal</h3>
+        <div class="m">$ ls
+<span class="ok">install.md</span>  <span class="ok">sensor/</span>
+<span class="ok">firmware/</span></div>
+        <p class="bar">██████████<em>░░░░</em> 74%</p>
+      </article>
+
+      <article class="card c-w">
+        <h3>~/works/paper-rings</h3>
+        <div class="m">$ ls
+<span class="ok">book.pdf</span>  <span class="ok">paper.txt</span>
+<span class="ok">binding/</span></div>
+        <p class="bar">█████████████<em>░░░</em> 92%</p>
+      </article>
+
+      <article class="card c-load">
+        <h3>load</h3>
+        <div class="loadgrid">
+          <span>brand</span><span class="bar">████████</span><span>4</span>
+          <span>editorial</span><span class="bar">███████</span><span>4</span>
+          <span>motion</span><span class="bar">███</span><span>2</span>
+          <span>product</span><span class="bar">█████</span><span>3</span>
+        </div>
+        <p class="m dim" style="margin-top:auto">$ top --by discipline</p>
+      </article>
+
+      <article class="card c-note">
+        <h3>notes</h3>
+        <div class="rowlink"><span>结构先行：先定网格与层级，再谈装饰</span><span>2025-10</span></div>
+        <div class="rowlink"><span>强对比：字号跨度 ≥ 4 倍，颜色只用两色</span><span>2025-08</span></div>
+        <div class="rowlink"><span>禁大圆角柔光默认 SaaS 风</span><span>2025-06</span></div>
+        <div class="rowlink"><span>编辑 × 粗野 = 最稳的合流</span><span>2025-03</span></div>
+        <div style="margin-top:16px">
+          <span class="tag">grid</span><span class="tag">typography</span><span class="tag">contrast</span><span class="tag">structure</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== C ============================== -->
+<section class="dC" id="dC">
+  <div class="lbl">
+    <b>方向 C</b><span>2.1 苹果 × 9.2 大片</span>
+    <i>网格 / 留白 / 12px 圆角来自苹果；全幅黑白图 + Didot 标题 + 编号系统来自大片</i>
+    <a href="#top">↑</a>
+  </div>
+
+  <div class="dC-wrap">
+    <div class="grid">
+      <article class="cell c-hero2">
+        <div class="ph"><i></i><u></u></div>
+        <div class="meta">
+          <span class="no">01 / 06</span>
+          <h2 class="nm">海岸线<br>档案</h2>
+          <span class="sub">Brand · 2025</span>
+        </div>
+      </article>
+
+      <article class="cell c-index">
+        <h3>Index — 6 works</h3>
+        <ul class="idx">
+          <li><b>01</b> 海岸线档案<span>2025</span></li>
+          <li><b>02</b> 深水信号<span>2024</span></li>
+          <li><b>03</b> 纸上年轮<span>2024</span></li>
+          <li><b>04</b> 城市切片<span>2023</span></li>
+          <li><b>05</b> 冷光协议<span>2023</span></li>
+          <li><b>06</b> 空白练习<span>2022</span></li>
+        </ul>
+      </article>
+
+      <article class="cell shot">
+        <div class="ph ph--b"><i></i><u></u></div>
+        <div class="meta"><span class="no">02</span><span class="nm">深水信号</span><span class="sub">Install</span></div>
+      </article>
+
+      <article class="cell shot">
+        <div class="ph ph--c"><i></i><u></u></div>
+        <div class="meta"><span class="no">03</span><span class="nm">纸上年轮</span><span class="sub">Book</span></div>
+      </article>
+
+      <article class="cell shot">
+        <div class="ph ph--d"><i></i><u></u></div>
+        <div class="meta"><span class="no">04</span><span class="nm">城市切片</span><span class="sub">Photo</span></div>
+      </article>
+
+      <article class="cell c-state">
+        <span class="k">Statement</span>
+        <p>结构先行，排版驱动，强对比。装饰只在有理由时出现。</p>
+      </article>
+
+      <article class="cell c-contact">
+        <div>
+          <div class="ln"><b>合作</b><span>hello@north.studio</span></div>
+          <div class="ln"><b>驻地</b><span>上海 / 柏林</span></div>
+          <div class="ln"><b>状态</b><span>2026 年 Q1 可接新项目</span></div>
+        </div>
+        <div class="ln" style="border-top:1px solid #ddd9d1;margin-top:18px"><span>06 works · 2022—2025</span><span>north.studio</span></div>
+      </article>
+    </div>
+
+    <div class="dC-foot">
+      <span>NORTH STUDIO — selected works</span>
+      <span>方向 C 标本 · 2.1 × 9.2</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// 时钟：让「终端」这一支真的有一点活的东西（只有一个字符位，不抢戏）
+document.querySelectorAll('.dA-nav .status').forEach(function(el){
+  var t = new Date();
+  el.innerHTML = '<em></em>online · ' + String(t.getHours()).padStart(2,'0') + ':' + String(t.getMinutes()).padStart(2,'0');
+});
+</script>
+</body>
+</html>
