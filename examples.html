@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分支示例册 · 18 个分支长什么样</title>
+<style>
+:root{
+  --ink:#111110; --paper:#F4F1EA; --paper2:#EDE9DF; --line:#111110;
+  --blue:#2B4BFF; --red:#E03B24; --lime:#C6F24E; --orange:#FF6A00;
+  --mono:"JetBrains Mono","IBM Plex Mono",Consolas,"Courier New",monospace;
+  --serif:Georgia,"Times New Roman","Songti SC",serif;
+  --sans:"Helvetica Neue",Arial,"Heiti SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+/* ---------- masthead ---------- */
+.mast{border-bottom:3px solid var(--line);padding:26px 0 16px}
+.mast .row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+h1{font-family:var(--serif);font-size:clamp(38px,6vw,76px);line-height:.94;letter-spacing:-.02em;font-weight:400}
+h1 em{font-style:normal;color:var(--blue)}
+.mast .meta{font-family:var(--mono);font-size:11px;line-height:1.7;text-align:right}
+.mastnav{display:flex;gap:0;border-top:1px solid var(--line);margin-top:14px}
+.mastnav a{flex:1;padding:9px 12px;border-right:1px solid var(--line);font-family:var(--mono);font-size:11px;text-decoration:none;color:var(--ink);letter-spacing:.06em}
+.mastnav a:last-child{border-right:none}
+.mastnav a:hover{background:var(--ink);color:var(--paper)}
+.mastnav b{font-weight:400;color:var(--blue)}
+/* ---------- intro ---------- */
+.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:0;border-bottom:1px solid var(--line)}
+.intro>div{padding:22px 24px;border-right:1px solid var(--line)}
+.intro>div:last-child{border-right:none}
+.intro p{font-size:14.5px;line-height:1.75;max-width:62ch}
+.intro p+p{margin-top:8px}
+.intro .hint{font-family:var(--mono);font-size:11px;line-height:1.9}
+/* ---------- axis ---------- */
+.axis{display:flex;align-items:baseline;gap:16px;border-bottom:3px solid var(--line);margin-top:44px;padding-bottom:10px}
+.axis .n{font-family:var(--serif);font-size:64px;line-height:.8}
+.axis h2{font-size:20px;letter-spacing:.02em;font-weight:700}
+.axis .sub{font-family:var(--mono);font-size:11px;color:#555;margin-left:auto;letter-spacing:.08em}
+/* ---------- branch grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid var(--line)}
+.branch{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;background:var(--paper)}
+.branch:nth-child(3n+1){background:var(--paper)}
+.bh{display:flex;align-items:baseline;gap:10px}
+.code{font-family:var(--mono);font-size:11px;background:var(--ink);color:var(--paper);padding:2px 6px;letter-spacing:.06em}
+.bh h3{font-size:15px;font-weight:700;letter-spacing:.01em}
+.crit{font-size:12px;line-height:1.6;color:#3a3a36;min-height:58px}
+.sample{position:relative;height:132px;border:1.5px solid var(--line);overflow:hidden;background:#fff}
+.refs{font-size:11.5px;line-height:1.65;list-style:none;border-top:1px dotted #999;padding-top:9px;margin-top:auto}
+.refs li{padding-left:12px;position:relative;margin-bottom:3px}
+.refs li:before{content:"→";position:absolute;left:0;color:var(--blue)}
+.refs a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--blue)}
+.refs a:hover{background:var(--blue);color:#fff}
+.refs i{font-style:normal;color:#666}
+/* ========== 4.1 新粗野 ========== */
+.s41{background:var(--lime);padding:12px 12px 10px}
+.s41 .card{background:#fff;border:2.5px solid #111;box-shadow:4px 4px 0 #111;padding:7px 10px;display:flex;justify-content:space-between;align-items:center}
+.s41 .card b{font-size:15px;letter-spacing:-.01em}
+.s41 .btn{background:var(--blue);color:#fff;border:2.5px solid #111;padding:4px 10px;font-family:var(--mono);font-size:10px;box-shadow:3px 3px 0 #111}
+/* ========== 4.2 酸性 ========== */
+.s42{background:#0E0E12;display:flex;align-items:center;justify-content:center}
+.s42 .liquid{font-family:var(--sans);font-weight:900;font-size:44px;letter-spacing:-3px;background:linear-gradient(100deg,#C6F24E,#2B4BFF 45%,#FF2ECC 75%);-webkit-background-clip:text;background-clip:text;color:transparent;transform:skewX(-12deg) rotate(-4deg);text-shadow:0 0 0 none}
+.s42 .blob{position:absolute;width:120px;height:120px;border-radius:48% 52% 60% 40%/50% 40% 60% 50%;background:conic-gradient(from 20deg,#fff,#9aa,#fff,#556);filter:blur(1px);opacity:.55;right:-26px;bottom:-30px;mix-blend-mode:screen}
+.s42 .tag{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:8px;color:#C6F24E;letter-spacing:.2em}
+/* ========== 4.3 结构粗野 ========== */
+.s43{background:#fff;padding:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr)}
+.s43 span{border-right:1px solid #111;border-bottom:1px solid #111}
+.s43 span:nth-child(4n){border-right:none}
+.s43 span:nth-child(n+9){border-bottom:none}
+.s43 .red{background:var(--red)}
+.s43 .t{grid-column:1/3;grid-row:1/2;font-family:var(--mono);font-size:9px;padding:5px;letter-spacing:.1em}
+/* ========== 4.4 RISO ========== */
+.s44{background:#EFE6D4;display:flex;align-items:center;justify-content:center;
+  background-image:radial-gradient(#d8cbae 1px,transparent 1.1px);background-size:6px 6px}
+.s44 .c1,.s44 .c2{position:absolute;width:62px;height:62px;border-radius:50%;mix-blend-mode:multiply}
+.s44 .c1{background:var(--red);transform:translate(-9px,-6px)}
+.s44 .c2{background:var(--blue);transform:translate(9px,7px);opacity:.85}
+.s44 .word{position:absolute;bottom:6px;font-family:var(--serif);font-size:11px;letter-spacing:.24em;transform:rotate(-1.6deg)}
+/* ========== 4.5 终端 ========== */
+.s45{background:#0B0F0B;color:#8CF08C;font-family:var(--mono);font-size:9.5px;line-height:1.65;padding:8px 10px}
+.s45 .dim{color:#3f6b3f}
+.s45 .cur:after{content:"█";animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+/* ========== 4.6 巨字 ========== */
+.s46{background:#111;color:#F4F1EA;display:flex;align-items:center;overflow:hidden}
+.s46 .big{font-family:var(--serif);font-size:150px;line-height:.8;letter-spacing:-.05em;margin-left:-26px;white-space:nowrap}
+.s46 .small{position:absolute;right:8px;bottom:6px;font-family:var(--mono);font-size:8px;letter-spacing:.18em;color:#C6F24E}
+/* ========== 2.1 苹果式 ========== */
+.s21{background:#E9E7E2;padding:10px;display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
+.s21 div{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.s21 .hero{grid-row:1/3;background:radial-gradient(120% 90% at 30% 15%,#dfe3ff,#fff 60%);display:flex;align-items:flex-end;padding:10px}
+.s21 .hero b{font-size:13px;letter-spacing:-.02em}
+.s21 .a{background:linear-gradient(140deg,#fff,#f3f1ec)}
+.s21 .b{background:linear-gradient(140deg,#fff,#eef2ff)}
+/* ========== 2.2 SaaS 暗底 ========== */
+.s22{background:#08090C;padding:9px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:7px}
+.s22 div{border:1px solid #23262E;border-radius:6px;background:linear-gradient(160deg,#12141A,#0A0B0F);padding:6px;position:relative;overflow:hidden}
+.s22 b{color:#EDEFF5;font-size:9px;font-family:var(--mono);letter-spacing:.06em}
+.s22 em{position:absolute;left:6px;bottom:5px;color:#5C6170;font-size:7.5px;font-style:normal;font-family:var(--mono)}
+.s22 .glow{position:absolute;width:70px;height:70px;background:radial-gradient(#2B4BFF88,transparent 70%);right:-16px;top:-18px}
+.s22 .spark{position:absolute;left:6px;right:6px;bottom:14px;height:9px;background:linear-gradient(90deg,#2B4BFF,#7A8CFF);clip-path:polygon(0 80%,18% 55%,36% 70%,54% 30%,72% 45%,100% 5%,100% 100%,0 100%);opacity:.75}
+/* ========== 2.3 仪表盘 ========== */
+.s23{background:#0F1216;padding:9px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:6px}
+.s23 div{background:#161A20;border:1px solid #222933;border-radius:4px;padding:6px;color:#C9D1DC;font-family:var(--mono)}
+.s23 .k{font-size:7px;color:#6C7684;letter-spacing:.1em}
+.s23 .v{font-size:17px;color:#EDF2F8;line-height:1.1}
+.s23 .bars{grid-column:1/4;display:flex;align-items:flex-end;gap:3px;padding:6px}
+.s23 .bars i{flex:1;background:#2B4BFF;display:block;max-height:100%}
+/* ========== 2.4 个人主页 ========== */
+.s24{background:#F7F5F2;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:6px}
+.s24 div{background:#fff;border:1px solid #e2ded6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;color:#8a857c}
+.s24 .me{grid-row:1/3;background:#111;color:#F4F1EA;flex-direction:column;gap:5px}
+.s24 .me .av{width:26px;height:26px;border-radius:50%;background:linear-gradient(140deg,var(--lime),var(--blue))}
+/* ========== 2.5 非对称 ========== */
+.s25{background:#F2F0EC;padding:9px;display:grid;grid-template-columns:1.75fr 1fr;grid-template-rows:2fr 1fr 1fr;gap:6px}
+.s25 div{background:#fff;border:1px solid #e0dcd4;border-radius:6px}
+.s25 .m{grid-row:1/3;background:linear-gradient(150deg,#1a1a1a,#3a3a44);color:#fff;display:flex;align-items:flex-end;padding:8px;font-family:var(--serif);font-size:14px}
+.s25 .s1{background:#dfe3ff}.s25 .s2{background:#f5e9d8}
+/* ========== 2.6 编辑式 Bento ========== */
+.s26{background:#FBF9F4;padding:9px;display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:7px}
+.s26 div{border:1px solid #ddd8cc;overflow:hidden;position:relative}
+.s26 .pic{grid-row:1/3;background:linear-gradient(150deg,#c8cdf7,#efe7d6 60%,#e9d3c0)}
+.s26 .txt{padding:7px;font-family:var(--serif);font-size:13px;line-height:1.15}
+.s26 .txt em{display:block;font-family:var(--mono);font-size:7px;letter-spacing:.14em;color:#8a857c;font-style:normal;margin-bottom:4px}
+.s26 .list{font-family:var(--mono);font-size:8px;line-height:1.8;padding:7px;color:#555}
+/* ========== 9.1 报纸 ========== */
+.s91{background:#FBFAF6;padding:8px;display:flex;flex-direction:column;gap:4px}
+.s91 .head{font-family:var(--serif);font-size:22px;line-height:.95;letter-spacing:-.02em;border-bottom:2px solid #111;padding-bottom:3px;display:flex;justify-content:space-between;align-items:flex-end}
+.s91 .head em{font-style:normal;color:var(--red);font-size:9px;font-family:var(--mono);letter-spacing:.1em}
+.s91 .cols{display:flex;gap:5px;flex:1}
+.s91 .cols div{flex:1;border-right:1px solid #d8d4c8;padding-right:4px;font-size:6.5px;line-height:1.35;color:#3b3b36}
+.s91 .cols div:last-child{border-right:none}
+/* ========== 9.2 时尚 ========== */
+.s92{background:#0A0A0A;color:#fff;display:flex;align-items:center;overflow:hidden}
+.s92 .img{position:absolute;inset:0;background:linear-gradient(115deg,#6b5b52,#c9b7a3 45%,#2c2622 85%)}
+.s92 .t{position:relative;font-family:var(--serif);font-size:66px;line-height:.78;letter-spacing:.02em;margin-left:-6px;mix-blend-mode:difference}
+.s92 .cap{position:absolute;right:7px;bottom:6px;font-family:var(--mono);font-size:7px;letter-spacing:.2em}
+/* ========== 9.3 独立杂志 ========== */
+.s93{background:#F0E9DB;padding:8px;display:grid;grid-template-columns:1fr 1.2fr 1fr;grid-template-rows:1fr auto;gap:5px}
+.s93 .photo{grid-row:1/3;background:linear-gradient(155deg,#4f6b58,#9fb3a6 55%,#e6dcc4);position:relative}
+.s93 .photo b{position:absolute;left:5px;bottom:4px;color:#fff;font-family:var(--serif);font-size:11px;letter-spacing:.04em}
+.s93 .col{font-size:7.5px;line-height:1.45;color:#3b352b}
+.s93 .tag{grid-column:2/4;display:flex;gap:4px;align-items:center}
+.s93 .tag i{font-family:var(--mono);font-size:6px;font-style:normal;background:#fff;border:1px solid #c9c0ae;padding:1px 4px}
+.s93 .tag .on{background:var(--orange);border-color:var(--orange);color:#fff}
+/* ========== 9.4 数字杂志 ========== */
+.s94{background:#fff;padding:10px;display:flex;flex-direction:column;gap:6px}
+.s94 p{font-family:var(--serif);font-size:8.5px;line-height:1.5;color:#2b2b28;max-width:52ch}
+.s94 .pq{border-left:3px solid var(--blue);padding-left:7px;font-family:var(--serif);font-size:12px;line-height:1.25;font-style:italic}
+.s94 .lbl{font-family:var(--mono);font-size:6.5px;letter-spacing:.16em;color:#8a857c}
+/* ========== 9.5 瑞士 ========== */
+.s95{background:#fff;padding:7px;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(3,1fr);gap:0;position:relative}
+.s95 span{border-right:1px dotted #e3e0d8;border-bottom:1px dotted #e3e0d8}
+.s95 .ttl{grid-column:1/4;grid-row:1/2;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:-.02em;padding:2px 3px;z-index:2}
+.s95 .cir{grid-column:4/7;grid-row:1/3;display:flex;align-items:center;justify-content:center;z-index:2}
+.s95 .cir b{width:46px;height:46px;background:var(--red);border-radius:50%;display:block}
+.s95 .cap{grid-column:1/4;grid-row:2/4;font-family:var(--mono);font-size:6px;line-height:1.5;padding:3px;z-index:2;color:#555}
+/* ========== 9.6 拼贴 ========== */
+.s96{background:#EDE7DC;overflow:hidden}
+.s96 .p1{position:absolute;width:76px;height:58px;background:linear-gradient(140deg,#c9c2b4,#f2ede3);clip-path:polygon(0 8%,96% 0,100% 92%,4% 100%);transform:rotate(-6deg);left:8px;top:14px;box-shadow:2px 3px 0 rgba(0,0,0,.12)}
+.s96 .p2{position:absolute;width:60px;height:74px;background:linear-gradient(160deg,#8fa3c8,#d8e0f0);clip-path:polygon(3% 0,100% 6%,94% 100%,0 94%);transform:rotate(7deg);right:14px;top:8px}
+.s96 .tape{position:absolute;width:44px;height:12px;background:#e8d98a;opacity:.85;transform:rotate(-18deg);left:16px;top:4px}
+.s96 .txt{position:absolute;bottom:6px;left:10px;font-family:var(--serif);font-size:13px;line-height:1;transform:rotate(-2deg)}
+.s96 .num{position:absolute;right:8px;bottom:5px;font-family:var(--mono);font-size:8px;color:#7a7364}
+/* ---------- footer ---------- */
+.foot{border-top:3px solid var(--line);margin-top:36px;padding:18px 0 44px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;gap:18px;flex-wrap:wrap}
+.foot a{color:var(--ink);border-bottom:1px solid var(--blue);text-decoration:none}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.intro{grid-template-columns:1fr}.intro>div{border-right:none;border-bottom:1px solid var(--line)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="row">
+    <div>
+      <div class="kicker">Aesthetic Charter · Branch Atlas</div>
+      <h1>18 个分支<em>，</em>各长什么样</h1>
+    </div>
+    <div class="meta">
+      3 根轴 / 18 个分支<br>
+      每个分支 = 判据 + 一个形状 + 两三个真参考<br>
+      形状是手绘的，点开参考看真实的
+    </div>
+  </div>
+  <nav class="mastnav">
+    <a href="#axis4"><b>4</b> 粗野 · 6 支</a>
+    <a href="#axis2"><b>2</b> Bento · 6 支</a>
+    <a href="#axis9"><b>9</b> 编辑 · 6 支</a>
+    <a href="https://ybbcmg.github.io/aesthetic-gallery/">← 回画廊挑</a>
+  </nav>
+</header>
+
+<section class="intro">
+  <div>
+    <p><b>怎么用这一页：</b>先看每个分支下面那个小方块——那是我按判据手画的最小标本，0.5 秒就能认出来。觉得「这个味道对」，再点参考链接去看真实的作品；参考链接都验过能开。</p>
+    <p>看不懂标本的时候，读判据那一行：判据是死的（边框多粗、有没有黑描边、字多大），味道是活的。</p>
+  </div>
+  <div>
+    <div class="hint">
+      标本 = 判据的可视化，不是成品<br>
+      参考 = 已核验可达的站点<br>
+      挑完回画廊点选，或直接跟我说「4.1 + 9.1」
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4 ================= -->
+<div class="axis" id="axis4"><span class="n">4</span><div><h2>粗野主义 · Brutalism</h2></div><span class="sub">6 支 / 硬边框 · 高对比 · 拒绝柔光</span></div>
+<div class="grid">
+
+  <article class="branch">
+    <div class="bh"><span class="code">4.1</span><h3>新粗野 Neubrutalism</h3></div>
+    <p class="crit">2–3px 黑描边 · 硬投影（offset 无模糊）· 高饱和撞色 · 直角或 4px 小圆角。最「友好」的粗野。</p>
+    <div class="sample s41">
+      <div class="card"><b>Gumroad</b><span class="btn">BUY</span></div>
+      <div class="card" style="margin-top:9px"><b style="font-size:11px">Figma 社区模板</b><span class="btn" style="background:var(--orange)">FREE</span></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://neobrutalism.dev" target="_blank" rel="noopener">neobrutalism.dev</a> <i>— 新粗野 UI 组件库，判据几乎全在这</i></li>
+      <li><a href="https://www.figma.com" target="_blank" rel="noopener">Figma 社区</a> <i>— 搜 neubrutalism 模板</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">4.2</span><h3>酸性 Acid / Anti-design</h3></div>
+    <p class="crit">荧光撞色 · 扭曲/液化字体 · 金属或液体质感 · 故意乱。审美的「噪音」用法。</p>
+    <div class="sample s42">
+      <span class="tag">ACID / NOISE</span>
+      <div class="liquid">MELT</div>
+      <div class="blob"></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.brutalistwebsites.com" target="_blank" rel="noopener">brutalistwebsites.com</a> <i>— 混着酸性/反设计，翻两页就有</i></li>
+      <li><a href="https://godly.website" target="_blank" rel="noopener">godly.website</a> <i>— 新锐作品索引，酸性很多</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">4.3</span><h3>结构粗野（瑞士味）</h3></div>
+    <p class="crit">黑白为主 + 单荧光点缀 · 严格网格 · 零装饰。克制到只剩结构，但结构是粗暴的。</p>
+    <div class="sample s43">
+      <span class="t">GRID / 12</span><span></span><span class="red"></span><span></span>
+      <span></span><span class="red"></span><span></span><span></span>
+      <span></span><span></span><span class="red"></span><span></span>
+    </div>
+    <ul class="refs">
+      <li><a href="https://typewolf.com" target="_blank" rel="noopener">typewolf.com</a> <i>— 字与网格的纪律感</i></li>
+      <li><a href="https://www.idea-mag.com" target="_blank" rel="noopener">IDEA 杂志</a> <i>— 日本版式，结构粗野的老家</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">4.4</span><h3>印刷粗野 Risograph</h3></div>
+    <p class="crit">错位套印 · 网点/纸感 · 手工毛边。两个颜色叠出第三个，边缘容许不干净。</p>
+    <div class="sample s44">
+      <div class="c1"></div><div class="c2"></div>
+      <div class="word">RISO · 2 COLORS</div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.kinfolk.com" target="_blank" rel="noopener">Kinfolk</a> <i>— 纸感与留白的参照系</i></li>
+      <li><a href="https://land-book.com" target="_blank" rel="noopener">Land-book</a> <i>— 搜 riso / print 类落地页</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">4.5</span><h3>终端粗野 Terminal</h3></div>
+    <p class="crit">等宽字体 · ASCII · 裸 HTML 的粗粝感。功能即形式，拒绝一切装饰。</p>
+    <div class="sample s45">
+      <div><span class="dim">$</span> ls ./branches</div>
+      <div>4.1 4.2 4.3 4.4 <b>4.5</b> 4.6</div>
+      <div><span class="dim">$</span> cat charter.md | head -3</div>
+      <div>结构先行 / 排版驱动 / 强对比</div>
+      <div><span class="dim">$</span> <span class="cur"></span></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://blog.rust-lang.org" target="_blank" rel="noopener">Rust Blog</a> <i>— 文档式页面，等宽与结构的默契</i></li>
+      <li><a href="https://www.brutalistwebsites.com" target="_blank" rel="noopener">brutalistwebsites.com</a> <i>— 翻「terminal」标签</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">4.6</span><h3>巨字粗野 Type-brutalism</h3></div>
+    <p class="crit">字号撑爆版面 · 裁切 · 墙面海报感。一个词占满整屏，信息量靠对比不靠数量。</p>
+    <div class="sample s46">
+      <div class="big">Aa</div>
+      <span class="small">SIZE IS THE MESSAGE</span>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.balenciaga.com" target="_blank" rel="noopener">Balenciaga 官网</a> <i>— 巨字+黑白的老牌样本（对脚本会 403，人工开正常）</i></li>
+      <li><a href="https://neobrutalism.dev" target="_blank" rel="noopener">neobrutalism.dev</a> <i>— 顶部大标题也是这个路数</i></li>
+    </ul>
+  </article>
+</div>
+
+<!-- ================= 2 ================= -->
+<div class="axis" id="axis2"><span class="n">2</span><div><h2>Bento 方格 · 格子说话</h2></div><span class="sub">6 支 / 一格一意 · 尺寸差造节奏</span></div>
+<div class="grid">
+
+  <article class="branch">
+    <div class="bh"><span class="code">2.1</span><h3>苹果式产品 Bento</h3></div>
+    <p class="crit">圆角卡片 + 克制阴影 · 每格一个卖点 · 大量留白。温和、干净、产品优先。</p>
+    <div class="sample s21">
+      <div class="hero"><b>One more thing.</b></div>
+      <div class="a"></div><div class="b"></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.apple.com" target="_blank" rel="noopener">apple.com</a> <i>— 发布会页就是标准答案</i></li>
+      <li><a href="https://www.figma.com" target="_blank" rel="noopener">Figma 官网</a> <i>— 卡片的圆角与阴影刻度</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">2.2</span><h3>SaaS 式 Bento</h3></div>
+    <p class="crit">暗底 · 细描边/玻璃卡 · 数据可视化入格。Linear / Vercel 那一挂，冷而准。</p>
+    <div class="sample s22">
+      <div><b>fast</b><em>12ms</em><div class="spark"></div></div>
+      <div><div class="glow"></div><b>secure</b><em>e2e</em></div>
+      <div><b>scale</b><em>∞</em></div>
+      <div><b>ship</b><em>ci/cd</em></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://linear.app" target="_blank" rel="noopener">linear.app</a> <i>— 暗底+细描边+渐变光的教科书</i></li>
+      <li><a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> <i>— 格子里的产品演示</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">2.3</span><h3>仪表盘 Bento</h3></div>
+    <p class="crit">信息密度高 · 指标 + 图表混排。每格都是可读的数字，装饰让位给信息。</p>
+    <div class="sample s23">
+      <div><div class="k">MRR</div><div class="v">48k</div></div>
+      <div><div class="k">CHURN</div><div class="v">1.2%</div></div>
+      <div><div class="k">NPS</div><div class="v">72</div></div>
+      <div class="bars"><i style="height:30%"></i><i style="height:55%"></i><i style="height:40%"></i><i style="height:80%"></i><i style="height:64%"></i><i style="height:96%"></i></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://stripe.com" target="_blank" rel="noopener">stripe.com</a> <i>— 数据与版式共存的能力</i></li>
+      <li><a href="https://linear.app" target="_blank" rel="noopener">Linear</a> <i>— 它的产品图就是仪表盘 Bento</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">2.4</span><h3>个人主页 Bento</h3></div>
+    <p class="crit">拼图式小块 · 头像 + 链接 · 轻量。一个人一格，链接是格子里的货。</p>
+    <div class="sample s24">
+      <div class="me"><div class="av"></div><b>@you</b></div>
+      <div>github</div><div>notes</div><div>photos</div><div>mail</div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://bento.me" target="_blank" rel="noopener">bento.me</a> <i>— 这个分支的原型，看别人的页就行</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">2.5</span><h3>非对称 Bento</h3></div>
+    <p class="crit">主卡 2×2 破均等 · 靠尺寸差造节奏。最忌平均分布——那是格子病。</p>
+    <div class="sample s25">
+      <div class="m">Selected<br>Work</div>
+      <div class="s1"></div><div class="s2"></div><div></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://land-book.com" target="_blank" rel="noopener">Land-book</a> <i>— 作品集分类里大量非对称</i></li>
+      <li><a href="https://godly.website" target="_blank" rel="noopener">godly.website</a> <i>— 首页一屏就是非对称 Bento</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">2.6</span><h3>编辑式 Bento</h3></div>
+    <p class="crit">杂志目录感 · 大图 + 文字卡混排。格子是版面，不是功能块。</p>
+    <div class="sample s26">
+      <div class="pic"></div>
+      <div class="txt"><em>ISSUE 04</em>Slow<br>Reading</div>
+      <div class="list">01 结构先行<br>02 排版驱动<br>03 强对比</div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.monocle.com" target="_blank" rel="noopener">Monocle</a> <i>— 目录页的格子逻辑</i></li>
+      <li><a href="https://www.kinfolk.com" target="_blank" rel="noopener">Kinfolk</a> <i>— 大图+小字的节奏</i></li>
+    </ul>
+  </article>
+</div>
+
+<!-- ================= 9 ================= -->
+<div class="axis" id="axis9"><span class="n">9</span><div><h2>编辑杂志 · Editorial</h2></div><span class="sub">6 支 / 字号对比 · 网格 · 图文关系</span></div>
+<div class="grid">
+
+  <article class="branch">
+    <div class="bh"><span class="code">9.1</span><h3>报纸 Broadsheet</h3></div>
+    <p class="crit">栏线 · 衬线巨标题 · 密集正文 · 黑白 + 一个强调色。信息密度本身就是气质。</p>
+    <div class="sample s91">
+      <div class="head">The Daily<em>VOL.12</em></div>
+      <div class="cols">
+        <div>结构先行，排版驱动，强对比。栏线把版面切碎，读者自己找路。</div>
+        <div>标题用衬线巨字压住整页，正文缩到 8pt 也不觉得挤。</div>
+        <div>一个强调色（通常是红）只给最重要的那行。</div>
+      </div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.vogue.com" target="_blank" rel="noopener">Vogue</a> <i>— 大牌媒体的版式底盘（顺带看 9.2）</i></li>
+      <li><a href="https://typewolf.com" target="_blank" rel="noopener">Typewolf</a> <i>— 找衬线巨标题的搭配</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">9.2</span><h3>时尚大片 Fashion</h3></div>
+    <p class="crit">出血大图 · 超大字 · 大留白 · 字重对比。图是主角，字是标签。</p>
+    <div class="sample s92">
+      <div class="img"></div>
+      <div class="t">NOIR</div>
+      <span class="cap">SS26 / PARIS</span>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.vogue.com" target="_blank" rel="noopener">vogue.com</a> <i>— 出血图与超大字的用法</i></li>
+      <li><a href="https://www.monocle.com" target="_blank" rel="noopener">Monocle</a> <i>— 更克制的同类</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">9.3</span><h3>独立杂志 Indie mag</h3></div>
+    <p class="crit">自定义网格 · 混排 · 纸感 · 彩色小标。规则自己定，但每一页都守。</p>
+    <div class="sample s93">
+      <div class="photo"><b>Into<br>the field</b></div>
+      <div class="col">自定义网格的好处：可以为一篇文章破一次例，然后余生都守规矩。</div>
+      <div class="col">小标用彩色，正文用暖灰。手感和纪律同时在场。</div>
+      <div class="tag"><i>FIELD</i><i class="on">NOTES</i><i>04</i></div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.kinfolk.com" target="_blank" rel="noopener">Kinfolk</a> <i>— 这个分支的标杆</i></li>
+      <li><a href="https://www.monocle.com" target="_blank" rel="noopener">Monocle</a> <i>— 信息型的独立杂志</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">9.4</span><h3>数字杂志 Web editorial</h3></div>
+    <p class="crit">滚动叙事 · 图文交织 · 大引文 · 细节小标。为屏幕写的杂志，长文不闷。</p>
+    <div class="sample s94">
+      <div class="lbl">CHAPTER 02 / ON GRIDS</div>
+      <div class="pq">“网格不是限制，是让呼吸有节奏。”</div>
+      <p>正文跟着滚动走，引文负责打断，小标负责定位。读者从不迷路，也不会睡着。</p>
+    </div>
+    <ul class="refs">
+      <li><a href="https://stripe.com" target="_blank" rel="noopener">Stripe</a> <i>— Stripe Press 那一套长页叙事</i></li>
+      <li><a href="https://linear.app" target="_blank" rel="noopener">Linear Blog</a> <i>— 短一点的数字杂志</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">9.5</span><h3>瑞士网格 Swiss</h3></div>
+    <p class="crit">12 栏 · Helvetica · 齐左 · 对齐崇拜。所有元素落在同一套栏线上，一个不许跑。</p>
+    <div class="sample s95">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <div class="ttl">Grid<br>Systems</div>
+      <div class="cir"><b></b></div>
+      <div class="cap">Müller-Brockmann，1961：<br>先画栏线，再放东西。</div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://typewolf.com" target="_blank" rel="noopener">Typewolf</a> <i>— Helvetica 系的用法</i></li>
+      <li><a href="https://www.idea-mag.com" target="_blank" rel="noopener">IDEA</a> <i>— 日本版瑞士网格</i></li>
+    </ul>
+  </article>
+
+  <article class="branch">
+    <div class="bh"><span class="code">9.6</span><h3>拼贴编辑 Collage</h3></div>
+    <p class="crit">剪贴错位 · 图层感 · 手撕边。允许不齐——但每块都有自己的理由。</p>
+    <div class="sample s96">
+      <div class="p1"></div><div class="tape"></div><div class="p2"></div>
+      <div class="txt">cut &amp; paste</div>
+      <div class="num">NO.06</div>
+    </div>
+    <ul class="refs">
+      <li><a href="https://www.brutalistwebsites.com" target="_blank" rel="noopener">brutalistwebsites</a> <i>— 拼贴/反设计的邻居</i></li>
+      <li><a href="https://land-book.com" target="_blank" rel="noopener">Land-book</a> <i>— 搜 collage 类</i></li>
+    </ul>
+  </article>
+</div>
+
+<footer class="foot">
+  <div>分支示例册 · 18 分支 / 标本手绘 / 参考已核验 · 2026-11-06</div>
+  <div><a href="https://ybbcmg.github.io/aesthetic-gallery/">回画廊</a> · <a href="https://ybbcmg.github.io/aesthetic-gallery/branches.html">分支树</a> · <a href="CHARTER.md">宪章全文</a></div>
+</footer>
+
+</div>
+</body>
+</html>
