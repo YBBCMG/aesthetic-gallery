@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>审美分支图 · 4/2/9 各展开六支</title>
+<style>
+  :root{
+    --paper:#f2efe8; --ink:#161616; --muted:#6b675f;
+    --accent:#ff4b1f; --hy:#ffd200;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink)}
+  body{font-family:"Songti SC","STSong","Source Han Serif SC",Georgia,serif;line-height:1.5}
+  .wrap{max-width:1280px;margin:0 auto;padding:40px 30px 64px}
+  .kicker{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  header.top{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:26px;display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+  h1{font-size:clamp(34px,4.6vw,56px);font-weight:900;letter-spacing:-.02em;line-height:1.04}
+  h1 em{font-style:normal;color:var(--accent)}
+  .top .sub{max-width:480px;font-size:14px;color:#3c3a35;padding-bottom:6px}
+  .top .sub b{color:var(--ink)}
+  .legend{display:flex;gap:22px;flex-wrap:wrap;margin:0 0 24px;font-size:12.5px;color:#3c3a35}
+  .legend span b{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--accent)}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:920px){.cols{grid-template-columns:1fr}}
+  .col{border:2px solid var(--ink);background:#fbf9f4;display:flex;flex-direction:column}
+  .col-head{padding:14px 16px;border-bottom:2px solid var(--ink);background:var(--ink);color:var(--paper);display:flex;align-items:baseline;gap:10px}
+  .col-head .no{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;opacity:.65}
+  .col-head h2{font-size:21px;font-weight:900;letter-spacing:.01em}
+  .col-head .en{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;letter-spacing:.14em;opacity:.7;margin-left:auto}
+  .branches{padding:6px 10px}
+  .branch{border-top:1px dashed #b9b4a8;padding:11px 6px 12px;display:grid;grid-template-columns:34px 1fr;gap:2px 10px}
+  .branch:first-child{border-top:0}
+  .branch .id{grid-column:1;grid-row:1;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;font-weight:700;color:var(--accent);padding-top:3px}
+  .branch h3{grid-column:2;grid-row:1;font-size:15px;font-weight:800;letter-spacing:.01em}
+  .branch h3 em{font-style:normal;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;color:var(--muted);font-weight:400;letter-spacing:.1em;margin-left:6px}
+  .branch .trait{grid-column:2;grid-row:2;font-size:12.5px;color:#4a4740}
+  .branch .ref{grid-column:2;grid-row:3;font-size:11px;color:var(--muted);font-style:italic}
+  .branch .swatch{grid-column:2;grid-row:4;display:flex;gap:4px;margin-top:5px}
+  .swatch i{width:16px;height:9px;display:block;border:1px solid rgba(0,0,0,.28)}
+  .mix{margin-top:30px}
+  .mix-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:920px){.mix-grid{grid-template-columns:1fr}}
+  .mix .card{border:2px solid var(--ink);padding:16px 16px 18px;position:relative}
+  .mix .card:nth-child(1){background:var(--hy)}
+  .mix .card:nth-child(2){background:#e6eefc}
+  .mix .card:nth-child(3){background:#ffe4dc}
+  .mix .tag{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;letter-spacing:.14em;color:rgba(0,0,0,.55);display:block;margin-bottom:8px}
+  .mix h3{font-size:17px;font-weight:900;margin-bottom:6px}
+  .mix p{font-size:12.5px;color:#33322e;line-height:1.55}
+  footer{margin-top:34px;border-top:3px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#3c3a35}
+  footer b{color:var(--ink)}
+  footer .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="kicker">Aesthetic Charter · Branch Sheet 2.0</div>
+      <h1>分支图：<em>4 / 2 / 9</em> 各展开六支</h1>
+    </div>
+    <p class="sub">三根轴是底味，分支才是口味。选定编号后，模型的输出才会稳定落在你想要的那一格。用法：报 <b>轴.分支</b>（例：<b>4.1 + 2.2</b>）。</p>
+  </header>
+
+  <div class="legend">
+    <span><b>04</b> 粗野主义 · 敢硬</span>
+    <span><b>02</b> Bento 方格 · 敢拼</span>
+    <span><b>09</b> 编辑杂志 · 敢排</span>
+    <span>混搭上限两根轴</span>
+  </div>
+
+  <section class="cols">
+
+    <div class="col">
+      <div class="col-head"><span class="no">04</span><h2>粗野主义</h2><span class="en">BRUTALISM</span></div>
+      <div class="branches">
+        <div class="branch"><span class="id">4.1</span><h3>新粗野<em>NEUBRUTAL</em></h3><p class="trait">2-3px 黑描边 · 硬投影无模糊 · 高饱和撞色 · 直角或 4px</p><span class="ref">Gumroad · Figma 社区模板</span><div class="swatch"><i style="background:#ffd200"></i><i style="background:#ff4b1f"></i><i style="background:#161616"></i></div></div>
+        <div class="branch"><span class="id">4.2</span><h3>酸性<em>ACID</em></h3><p class="trait">荧光撞色 · 扭曲液化字体 · 金属液体质感 · 故意乱</p><span class="ref">音乐/潮流活动页 · Awwwards</span><div class="swatch"><i style="background:#c6ff00"></i><i style="background:#00e5ff"></i><i style="background:#ff00aa"></i></div></div>
+        <div class="branch"><span class="id">4.3</span><h3>结构粗野<em>SWISS-ISH</em></h3><p class="trait">黑白为主 + 单荧光点缀 · 严格网格 · 零装饰</p><span class="ref">瑞士海报 · Jazz 专辑封面</span><div class="swatch"><i style="background:#111"></i><i style="background:#fff"></i><i style="background:#ff4b1f"></i></div></div>
+        <div class="branch"><span class="id">4.4</span><h3>印刷粗野<em>RISO</em></h3><p class="trait">错位套印 · 网点纸感 · 手工毛边</p><span class="ref">独立杂志 · RISO 印刷</span><div class="swatch"><i style="background:#f26d6d"></i><i style="background:#6db8f2"></i><i style="background:#f4e9d8"></i></div></div>
+        <div class="branch"><span class="id">4.5</span><h3>终端粗野<em>TERMINAL</em></h3><p class="trait">等宽字体 · ASCII · 裸 HTML 的粗粝感</p><span class="ref">Craigslist · 老式个人站</span><div class="swatch"><i style="background:#06120a"></i><i style="background:#33ff66"></i><i style="background:#161616"></i></div></div>
+        <div class="branch"><span class="id">4.6</span><h3>巨字粗野<em>TYPE</em></h3><p class="trait">字号撑爆版面 · 裁切 · 墙面海报感</p><span class="ref">Balenciaga · 街头大字报</span><div class="swatch"><i style="background:#ff2b2b"></i><i style="background:#111"></i><i style="background:#f2efe8"></i></div></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="col-head"><span class="no">02</span><h2>Bento 方格</h2><span class="en">BENTO GRID</span></div>
+      <div class="branches">
+        <div class="branch"><span class="id">2.1</span><h3>苹果式<em>APPLE</em></h3><p class="trait">圆角卡片 + 克制阴影 · 每格一个卖点 · 大量留白</p><span class="ref">Apple 发布会页</span><div class="swatch"><i style="background:#f5f5f7"></i><i style="background:#1d1d1f"></i><i style="background:#0071e3"></i></div></div>
+        <div class="branch"><span class="id">2.2</span><h3>SaaS 式<em>DARK SAAS</em></h3><p class="trait">暗底 · 细描边/玻璃卡 · 数据可视化入格</p><span class="ref">Linear · Vercel 官网</span><div class="swatch"><i style="background:#0d0d0f"></i><i style="background:#5e6ad2"></i><i style="background:#26262b"></i></div></div>
+        <div class="branch"><span class="id">2.3</span><h3>仪表盘<em>DASHBOARD</em></h3><p class="trait">信息密度高 · 指标 + 图表混排</p><span class="ref">Stripe · Notion 仪表盘</span><div class="swatch"><i style="background:#fff"></i><i style="background:#0f172a"></i><i style="background:#3b82f6"></i></div></div>
+        <div class="branch"><span class="id">2.4</span><h3>个人主页<em>BIO</em></h3><p class="trait">拼图式小块 · 头像 + 链接 · 轻量</p><span class="ref">bento.me</span><div class="swatch"><i style="background:#ffe08a"></i><i style="background:#7dd3fc"></i><i style="background:#ff9db3"></i></div></div>
+        <div class="branch"><span class="id">2.5</span><h3>非对称<em>ASYMMETRIC</em></h3><p class="trait">主卡 2x2 破均等 · 尺寸差造节奏</p><span class="ref">作品集首页</span><div class="swatch"><i style="background:#111"></i><i style="background:#f97316"></i><i style="background:#fafaf7"></i></div></div>
+        <div class="branch"><span class="id">2.6</span><h3>编辑式<em>EDITORIAL</em></h3><p class="trait">杂志目录感 · 大图 + 文字卡混排</p><span class="ref">设计博客索引页</span><div class="swatch"><i style="background:#f2efe8"></i><i style="background:#c8102e"></i><i style="background:#161616"></i></div></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="col-head"><span class="no">09</span><h2>编辑杂志</h2><span class="en">EDITORIAL</span></div>
+      <div class="branches">
+        <div class="branch"><span class="id">9.1</span><h3>报纸<em>BROADSHEET</em></h3><p class="trait">栏线 · 衬线巨标题 · 密集正文 · 黑白+一强调色</p><span class="ref">NYT · 卫报</span><div class="swatch"><i style="background:#141414"></i><i style="background:#f4f1ea"></i><i style="background:#c8102e"></i></div></div>
+        <div class="branch"><span class="id">9.2</span><h3>时尚大片<em>FASHION</em></h3><p class="trait">出血大图 · 超大字 · 大留白 · 字重对比</p><span class="ref">Vogue · 品牌 campaign</span><div class="swatch"><i style="background:#111"></i><i style="background:#f6f2ec"></i><i style="background:#d9b8a6"></i></div></div>
+        <div class="branch"><span class="id">9.3</span><h3>独立杂志<em>INDIE MAG</em></h3><p class="trait">自定义网格 · 混排 · 纸感 · 彩色小标</p><span class="ref">Monocle · Kinfolk</span><div class="swatch"><i style="background:#f4efe6"></i><i style="background:#2f5d50"></i><i style="background:#c97b4a"></i></div></div>
+        <div class="branch"><span class="id">9.4</span><h3>数字杂志<em>WEB EDITORIAL</em></h3><p class="trait">滚动叙事 · 图文交织 · 大引文 · 细节小标</p><span class="ref">Stripe Press · Linear Blog</span><div class="swatch"><i style="background:#fff"></i><i style="background:#111"></i><i style="background:#ff5c35"></i></div></div>
+        <div class="branch"><span class="id">9.5</span><h3>瑞士网格<em>SWISS GRID</em></h3><p class="trait">12 栏 · Helvetica · 齐左 · 对齐崇拜</p><span class="ref">Müller-Brockmann 系</span><div class="swatch"><i style="background:#fff"></i><i style="background:#e30613"></i><i style="background:#111"></i></div></div>
+        <div class="branch"><span class="id">9.6</span><h3>拼贴编辑<em>COLLAGE</em></h3><p class="trait">剪贴错位 · 图层感 · 手撕边</p><span class="ref">独立出版 · zine</span><div class="swatch"><i style="background:#efe6d8"></i><i style="background:#ff7a59"></i><i style="background:#4d7cff"></i></div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="mix">
+    <div class="kicker" style="margin-bottom:10px">THE THREE BLENDS · 合流优先用这三套</div>
+    <div class="mix-grid">
+      <div class="card"><span class="tag">4 + 9 · 编辑粗野</span><h3>报纸骨架 × 粗野态度</h3><p>栏线与衬线巨标题搭硬边框、撞色、错位。适合海报级落地页、封面、个人主页首屏。</p></div>
+      <div class="card"><span class="tag">4 + 2 · 粗野 Bento</span><h3>硬阴影卡片拼图</h3><p>每格一条硬投影 + 高饱和色块拼图。适合有态度的作品集、产品仪表盘、年度总结页。</p></div>
+      <div class="card"><span class="tag">2 + 9 · 编辑 Bento</span><h3>杂志目录式网格</h3><p>大图卡 + 文字卡混排，像杂志目录。适合博客首页、文档索引、资源聚合页。</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>选好了就报编号，例：<b class="mono">4.1 + 2.2</b>；最多两根轴混搭，三根一起会散。</div>
+    <div>完整宪章：<b class="mono">D:/DSH/aesthetic-charter.md</b></div>
+  </footer>
+
+</div>
+</body>
+</html>
